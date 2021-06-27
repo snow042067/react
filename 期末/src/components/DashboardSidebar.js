@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
@@ -14,8 +14,8 @@ import {
 import {
   AlertCircle as AlertCircleIcon,
   BarChart as BarChartIcon,
-  Lock as LockIcon,
-  Settings as SettingsIcon,
+  LogIn as LogInIcon,
+  Briefcase as BriefcaseIcon,
   ShoppingBag as ShoppingBagIcon,
   User as UserIcon,
   UserPlus as UserPlusIcon,
@@ -23,63 +23,77 @@ import {
 } from 'react-feather';
 import NavItem from './NavItem';
 
-const user = {
-  avatar: '/static/images/avatars/avatar_6.png',
-  jobTitle: 'Senior Developer',
-  name: 'Katarina Smith'
+let user = {
+  avatar: '/static/images/avatars/guest.png',
+  EmpId: '',
+  EmpName: 'Guest',
+  JobTitle: 'Please Log In',
+  DeptId: '',
+  City: '',
+  Address: '',
+  Phone: '',
+  ZipCode: '',
+  MonthSalary: '',
+  AnnualLeave: ''
 };
 
-const items = [
-  {
-    href: '/app/dashboard',
-    icon: BarChartIcon,
-    title: 'Dashboard'
-  },
-  {
-    href: '/app/customers',
-    icon: UsersIcon,
-    title: 'Customers'
-  },
-  {
-    href: '/app/products',
-    icon: ShoppingBagIcon,
-    title: 'Products'
-  },
-  {
-    href: '/app/account',
-    icon: UserIcon,
-    title: 'Account'
-  },
-  {
-    href: '/app/settings',
-    icon: SettingsIcon,
-    title: 'Settings'
-  },
-  {
-    href: '/login',
-    icon: LockIcon,
-    title: 'Login'
-  },
-  {
-    href: '/register',
-    icon: UserPlusIcon,
-    title: 'Register'
-  },
-  {
-    href: '/404',
-    icon: AlertCircleIcon,
-    title: 'Error'
-  }
-];
+export const currentUser = React.createContext(user);
 
 const DashboardSidebar = ({ onMobileClose, openMobile }) => {
-  const location = useLocation();
+  const items = [
+    {
+      href: '/app/dashboard',
+      icon: BarChartIcon,
+      title: 'Dashboard'
+    },
+    {
+      href: '/app/customers',
+      icon: UsersIcon,
+      title: 'Customers'
+    },
+    {
+      href: '/app/products',
+      icon: ShoppingBagIcon,
+      title: 'Products'
+    },
+    {
+      href: '/app/account',
+      icon: UserIcon,
+      title: 'Account'
+    },
+    {
+      href: '/app/settings',
+      icon: BriefcaseIcon,
+      title: 'Order'
+    },
+    {
+      href: '/login',
+      icon: LogInIcon,
+      title: 'Login'
+    },
+    {
+      href: '/register',
+      icon: UserPlusIcon,
+      title: 'Register'
+    },
+    {
+      href: '/404',
+      icon: AlertCircleIcon,
+      title: 'Error'
+    }
+  ];
 
+  user = useContext(currentUser);
+  const location = useLocation();
   useEffect(() => {
     if (openMobile && onMobileClose) {
       onMobileClose();
     }
   }, [location.pathname]);
+
+  if (user.EmpName !== 'Guest') {
+    items.splice(5, 1);
+  }
 
   const content = (
     <Box
@@ -111,13 +125,13 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
           color="textPrimary"
           variant="h5"
         >
-          {user.name}
+          {user.EmpName}
         </Typography>
         <Typography
           color="textSecondary"
           variant="body2"
         >
-          {user.jobTitle}
+          {user.JobTitle}
         </Typography>
       </Box>
       <Divider />

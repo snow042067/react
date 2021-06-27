@@ -1,4 +1,5 @@
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { useNavigate, Link as RouterLink } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
@@ -6,21 +7,64 @@ import {
   Box,
   Button,
   Container,
-  Grid,
-  Link,
   TextField,
   Typography
 } from '@material-ui/core';
-import FacebookIcon from 'src/icons/Facebook';
-import GoogleIcon from 'src/icons/Google';
+import { currentUser } from 'src/components/DashboardSidebar';
+
+const submitData = {
+  EmpId: '',
+  Phone: ''
+};
+
+const changeHandler = (e) => {
+  const { name, value } = e.target;
+  if (name === 'id') {
+    submitData.EmpId = value;
+  } else if (name === 'phone') {
+    submitData.Phone = value;
+  }
+};
 
 const Login = () => {
   const navigate = useNavigate();
+  const userData = useContext(currentUser);
+  const submitHandler = () => {
+    // e.preventDefault();
+    fetch('https://fs.mis.kuas.edu.tw/~s1106137135/webFinalPHP/doLogin.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(submitData),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          const user = data.user[0];
+          userData.EmpId = user.EmpId;
+          userData.EmpName = user.EmpName;
+          userData.JobTitle = user.JobTitle;
+          userData.DeptId = user.DeptId;
+          userData.City = user.City;
+          userData.Address = user.Address;
+          userData.Phone = user.Phone;
+          userData.ZipCode = user.ZipCode;
+          userData.MonthSalary = user.MonthSalary;
+          userData.AnnualLeave = user.AnnualLeave;
+        } else {
+          alert(data.msg);// eslint-disable-line no-alert
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <>
       <Helmet>
-        <title>Login</title>
+        <title>Login | Material Kit</title>
       </Helmet>
       <Box
         sx={{
@@ -34,12 +78,12 @@ const Login = () => {
         <Container maxWidth="sm">
           <Formik
             initialValues={{
-              EmpId: 'EmpId',
-              password: 'Password123'
+              email: '',
+              password: ''
             }}
             validationSchema={Yup.object().shape({
-              EmpId: Yup.string().email('Must be a valid EmpId').max(255).required('EmpId is required'),
-              password: Yup.string().max(255).required('Password is required')
+              email: Yup.string().max(255).required('ID is required'),
+              password: Yup.string().max(255).required('Phone number is required')
             })}
             onSubmit={() => {
               navigate('/app/dashboard', { replace: true });
@@ -48,13 +92,9 @@ const Login = () => {
             {({
               errors,
               handleBlur,
-              handleChange,
-              handleSubmit,
-              isSubmitting,
-              touched,
-              values
+              touched
             }) => (
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={submitHandler}>
                 <Box sx={{ mb: 3 }}>
                   <Typography
                     color="textPrimary"
@@ -62,50 +102,7 @@ const Login = () => {
                   >
                     Sign in
                   </Typography>
-                  <Typography
-                    color="textSecondary"
-                    gutterBottom
-                    variant="body2"
-                  >
-                    Sign in on the internal platform
-                  </Typography>
                 </Box>
-                <Grid
-                  container
-                  spacing={3}
-                >
-                  <Grid
-                    item
-                    xs={12}
-                    md={6}
-                  >
-                    <Button
-                      color="primary"
-                      fullWidth
-                      startIcon={<FacebookIcon />}
-                      onClick={handleSubmit}
-                      size="large"
-                      variant="contained"
-                    >
-                      Login with Facebook
-                    </Button>
-                  </Grid>
-                  <Grid
-                    item
-                    xs={12}
-                    md={6}
-                  >
-                    <Button
-                      fullWidth
-                      startIcon={<GoogleIcon />}
-                      onClick={handleSubmit}
-                      size="large"
-                      variant="contained"
-                    >
-                      Login with Google
-                    </Button>
-                  </Grid>
-                </Grid>
                 <Box
                   sx={{
                     pb: 1,
@@ -117,61 +114,45 @@ const Login = () => {
                     color="textSecondary"
                     variant="body1"
                   >
-                    or login with EmpId
+                    Sign in with your ID
                   </Typography>
                 </Box>
                 <TextField
-                  error={Boolean(touched.EmpId && errors.EmpId)}
+                  error={Boolean(touched.email && errors.email)}
                   fullWidth
-                  helperText={touched.EmpId && errors.EmpId}
-                  label="EmpId"
+                  helperText={touched.email && errors.email}
+                  label="Your ID"
                   margin="normal"
-                  name="EmpId"
+                  name="id"
                   onBlur={handleBlur}
-                  onChange={handleChange}
-                  type="text"
-                  value={values.EmpId}
+                  onChange={changeHandler}
                   variant="outlined"
                 />
                 <TextField
                   error={Boolean(touched.password && errors.password)}
                   fullWidth
                   helperText={touched.password && errors.password}
-                  label="Password"
+                  label="Your Phone Number"
                   margin="normal"
-                  name="password"
+                  name="phone"
                   onBlur={handleBlur}
-                  onChange={handleChange}
-                  type="password"
-                  value={values.password}
+                  onChange={changeHandler}
                   variant="outlined"
                 />
                 <Box sx={{ py: 2 }}>
                   <Button
                     color="primary"
-                    disabled={isSubmitting}
                     fullWidth
                     size="large"
                     type="submit"
+                    onClick={submitHandler}
                     variant="contained"
+                    component={RouterLink}
+                    to="/app/dashboard"
                   >
                     Sign in now
                   </Button>
                 </Box>
-                <Typography
-                  color="textSecondary"
-                  variant="body1"
-                >
-                  Don&apos;t have an account?
-                  {' '}
-                  <Link
-                    component={RouterLink}
-                    to="/register"
-                    variant="h6"
-                  >
-                    Sign up
-                  </Link>
-                </Typography>
               </form>
             )}
           </Formik>
