@@ -33,7 +33,7 @@ const ProductList = () => {
   const [keyword, setKeyword] = useState();
   let newProduct = {};
   const search = () => {
-    fetch('https://fs.mis.kuas.edu.tw/~s1106137135/webFinalPHP/searchProduct.php', {
+    fetch('http://localhost/php/searchProduct.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -50,7 +50,7 @@ const ProductList = () => {
   };
 
   const insert = () => {
-    fetch('https://fs.mis.kuas.edu.tw/~s1106137135/webFinalPHP/insertProduct.php', {
+    fetch('http://localhost/php/insertProduct.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -69,7 +69,7 @@ const ProductList = () => {
   };
 
   const deleteProduct = (e) => {
-    fetch('https://fs.mis.kuas.edu.tw/~s1106137135/webFinalPHP/deleteProduct.php', {
+    fetch('http://localhost/php/deleteProduct.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -104,7 +104,7 @@ const ProductList = () => {
               value={product.ProdID}
               onClick={deleteProduct}
             >
-              Delete
+              刪除
             </Button>
           </TableCell>
         </TableRow>
@@ -171,7 +171,7 @@ const ProductList = () => {
                           variant="contained"
                           onClick={search}
                         >
-                          Search products
+                          搜尋
                         </Button>
                       </Grid>
                     </Grid>
@@ -222,7 +222,7 @@ const ProductList = () => {
                           variant="contained"
                           onClick={insert}
                         >
-                          Add new product
+                          新增
                         </Button>
                       </Grid>
                     </Grid>
@@ -236,10 +236,10 @@ const ProductList = () => {
               <Table className={classes.table} aria-label="simple table">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Product Name</TableCell>
-                    <TableCell>Product ID</TableCell>
-                    <TableCell>Unit Price</TableCell>
-                    <TableCell>Cost</TableCell>
+                    <TableCell>產品名稱</TableCell>
+                    <TableCell>產品編號</TableCell>
+                    <TableCell>單價</TableCell>
+                    <TableCell>成本</TableCell>
                     <TableCell />
                   </TableRow>
                 </TableHead>

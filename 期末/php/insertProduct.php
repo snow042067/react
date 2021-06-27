@@ -1,7 +1,4 @@
 <?php
-// update-user.php is for updating an existing user.
-// Method: POST - http://localhost/php-react/update-user.php
-// Required Fields: id --> EmpId, user_name --> EmpName, user_email --> JobTitle
 
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");

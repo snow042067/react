@@ -1,6 +1,6 @@
 const fetchData = () => {
   let product = null;
-  fetch('https://fs.mis.kuas.edu.tw/~s1106137135/webFinalPHP/searchProduct.php', {
+  fetch('http://localhost/php/searchProduct.php', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

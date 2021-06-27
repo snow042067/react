@@ -34,7 +34,7 @@ const SettingsView = () => {
   };
 
   const updateDetailPage = (OrderId) => {
-    fetch('https://fs.mis.kuas.edu.tw/~s1106137135/webFinalPHP/updateDetailPage.php', {
+    fetch('http://localhost/php/updateDetailPage.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -52,7 +52,7 @@ const SettingsView = () => {
   };
 
   const searchOrder = () => {
-    fetch('https://fs.mis.kuas.edu.tw/~s1106137135/webFinalPHP/searchOrder.php', {
+    fetch('http://localhost/php/searchOrder.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -72,7 +72,7 @@ const SettingsView = () => {
   const searchDetail = (e) => {
     let { value } = e.currentTarget.value;
     value = e.currentTarget.value;
-    fetch('https://fs.mis.kuas.edu.tw/~s1106137135/webFinalPHP/searchDetail.php', {
+    fetch('http://localhost/php/searchDetail.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -91,7 +91,7 @@ const SettingsView = () => {
   };
 
   const deleteOrder = (e) => {
-    fetch('https://fs.mis.kuas.edu.tw/~s1106137135/webFinalPHP/deleteOrder.php', {
+    fetch('http://localhost/php/deleteOrder.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -109,7 +109,7 @@ const SettingsView = () => {
   };
 
   const deleteDetail = (e) => {
-    fetch('https://fs.mis.kuas.edu.tw/~s1106137135/webFinalPHP/deleteDetail.php', {
+    fetch('http://localhost/php/deleteDetail.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -138,9 +138,9 @@ const SettingsView = () => {
       if (list.detailList) {
         tableHead = (
           <TableRow>
-            <TableCell>Product ID</TableCell>
-            <TableCell>Quantity</TableCell>
-            <TableCell>Discount</TableCell>
+            <TableCell>產品代號</TableCell>
+            <TableCell>數量</TableCell>
+            <TableCell>折扣</TableCell>
             <TableCell />
           </TableRow>
         );
@@ -157,7 +157,7 @@ const SettingsView = () => {
                 orderid={detail.OrderId}
                 onClick={deleteDetail}
               >
-                Delete
+                刪除
               </Button>
             </TableCell>
           </TableRow>
@@ -172,11 +172,11 @@ const SettingsView = () => {
       if (list.orderList) {
         tableHead = (
           <TableRow>
-            <TableCell>Order ID</TableCell>
-            <TableCell>Empolyee ID</TableCell>
-            <TableCell>Customer ID</TableCell>
-            <TableCell>Order Date</TableCell>
-            <TableCell>Description</TableCell>
+            <TableCell>訂單編號</TableCell>
+            <TableCell>員工編號</TableCell>
+            <TableCell>顧客編號</TableCell>
+            <TableCell>訂單日期</TableCell>
+            <TableCell>備註</TableCell>
             <TableCell />
             <TableCell />
           </TableRow>
@@ -194,7 +194,7 @@ const SettingsView = () => {
                 value={order.OrderId}
                 onClick={searchDetail}
               >
-                Detail
+                詳細
               </Button>
             </TableCell>
             <TableCell>
@@ -204,7 +204,7 @@ const SettingsView = () => {
                 value={order.OrderId}
                 onClick={deleteOrder}
               >
-                Delete
+                刪除
               </Button>
             </TableCell>
           </TableRow>
@@ -223,7 +223,7 @@ const SettingsView = () => {
             variant="contained"
             onClick={searchOrder}
           >
-            Back
+            返回
           </Button>
         </CardContent>
       </Card>
@@ -263,7 +263,7 @@ const SettingsView = () => {
                   variant="contained"
                   onClick={searchOrder}
                 >
-                  Search
+                  搜尋
                 </Button>
               </Grid>
             </Grid>
@@ -275,7 +275,7 @@ const SettingsView = () => {
   return (
     <>
       <Helmet>
-        <title>Settings | Material Kit</title>
+        <title>Order | Material Kit</title>
       </Helmet>
       <Box
         sx={{

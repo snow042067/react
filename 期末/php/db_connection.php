@@ -1,8 +1,8 @@
 <?php
-$db_host = 'db.mis.kuas.edu.tw';
-$db_user = 's1106137135';  // 改成你的資料庫帳號
-$db_password = 'F129467905';  // 改成你的資料庫密碼
-$db_name = 's1106137135';   // 案例資料庫
+$db_host = 'localhost';
+$db_user = 'root';  // 改成你的資料庫帳號
+$db_password = '';  // 改成你的資料庫密碼
+$db_name = 'mmisdb';   // 案例資料庫
 
 $db_connection = mysqli_connect($db_host, $db_user, $db_password, $db_name);
 

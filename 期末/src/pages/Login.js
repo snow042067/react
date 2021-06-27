@@ -31,7 +31,7 @@ const Login = () => {
   const userData = useContext(currentUser);
   const submitHandler = () => {
     // e.preventDefault();
-    fetch('https://fs.mis.kuas.edu.tw/~s1106137135/webFinalPHP/doLogin.php', {
+    fetch('http://localhost/php/doLogin.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -121,7 +121,7 @@ const Login = () => {
                   error={Boolean(touched.email && errors.email)}
                   fullWidth
                   helperText={touched.email && errors.email}
-                  label="Your ID"
+                  label="ID"
                   margin="normal"
                   name="id"
                   onBlur={handleBlur}
@@ -132,7 +132,7 @@ const Login = () => {
                   error={Boolean(touched.password && errors.password)}
                   fullWidth
                   helperText={touched.password && errors.password}
-                  label="Your Phone Number"
+                  label="Phone Number"
                   margin="normal"
                   name="phone"
                   onBlur={handleBlur}
