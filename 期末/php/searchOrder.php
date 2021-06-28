@@ -13,7 +13,7 @@ $data = json_decode(file_get_contents("php://input"));
 $sql = "SELECT * FROM `salesorder`";
 
 if (isset($data->startDate) && isset($data->endDate)) {
-    $sql .= " WHERE `OrderDate` BETWEEN '$data->startDate' AND '$data->endDate'";
+    $sql .= " WHERE `OrderId` BETWEEN '$data->startDate' AND '$data->endDate'";
 }
 
 $query = mysqli_query($db_connection, $sql);
